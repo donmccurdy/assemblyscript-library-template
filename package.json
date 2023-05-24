@@ -6,10 +6,30 @@
   "sideEffects": false,
   "types": "./build/index.d.ts",
   "main": "./build/my-package-node.cjs",
-  "exports": "./build/my-package-node.modern.js",
+	"module": "./build/my-package-default.modern.js",
+	"exports": {
+		"compat": {
+			"types": "./build/index.d.ts",
+			"require": "./build/my-package-compat.cjs",
+			"default": "./build/my-package-compat.modern.js"
+		},
+		"node": {
+			"types": "./build/index.d.ts",
+			"require": "./build/my-package-node.cjs",
+			"default": "./build/my-package-node.modern.js"
+		},
+		"default": {
+			"types": "./build/index.d.ts",
+			"require": "./build/my-package-default.cjs",
+			"default": "./build/my-package-default.modern.js"
+		}
+	},
   "scripts": {
-    "build": "npm run asbuild && npm run build:node",
-    "build:node": "microbundle build --target node --format modern --raw --no-compress --output build/my-package-node.js --external node:fs/promises",
+    "build": "yarn asbuild && yarn build:compat && yarn build:node && yarn build:default",
+		"build:compat": "microbundle build --target web --format modern,cjs --raw --no-compress --no-sourcemap --output build/my-package-compat.js --external ./release.wasm --alias ./wasm=./wasm-compat --define WASM_BASE64=`base64 -i build/release.wasm`",
+		"build:node": "microbundle build --target node --format modern,cjs --raw --no-compress --no-sourcemap --output build/my-package-node.js --external node:fs/promises --alias ./wasm=./wasm-node",
+		"build:default": "microbundle build --target web --format modern,cjs --raw --no-compress --output build/my-package-default.js --external ./release.wasm --alias ./wasm=./wasm-default",
+    "clean": "rm build/*",
     "test": "ava test/*.test.ts",
     "asbuild:debug": "asc assembly/index.ts --target debug",
     "asbuild:release": "asc assembly/index.ts --target release",

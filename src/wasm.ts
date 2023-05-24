@@ -1,5 +1,3 @@
-import { readFile } from 'node:fs/promises';
-
-const wasmURL = /* #__PURE__ */ new URL('./release.wasm', import.meta.url);
-const wasm = /* #__PURE__ */ readFile(wasmURL);
+// src/wasm.ts — Stub, replaced at compile-time.
+const wasm = new Uint8Array(0);
 export default wasm;
