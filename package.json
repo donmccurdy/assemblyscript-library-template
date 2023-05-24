@@ -25,7 +25,7 @@
 		}
 	},
   "scripts": {
-    "build": "yarn asbuild && yarn build:compat && yarn build:node && yarn build:default",
+    "build": "npm run asbuild && npm run build:compat && npm run build:node && npm run build:default",
 		"build:compat": "microbundle build --target web --format modern,cjs --raw --no-compress --no-sourcemap --output build/my-package-compat.js --external ./release.wasm --alias ./wasm=./wasm-compat --define WASM_BASE64=`base64 -i build/release.wasm`",
 		"build:node": "microbundle build --target node --format modern,cjs --raw --no-compress --no-sourcemap --output build/my-package-node.js --external node:fs/promises --alias ./wasm=./wasm-node",
 		"build:default": "microbundle build --target web --format modern,cjs --raw --no-compress --output build/my-package-default.js --external ./release.wasm --alias ./wasm=./wasm-default",
