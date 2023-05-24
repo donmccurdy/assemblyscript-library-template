@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"my-package": ["./"]
+		},
+		"typeRoots": ["node_modules/@types"],
+		"moduleResolution": "node",
+		"module": "ESNext",
+		"lib": ["ESNext", "DOM"],
+		"target": "ESNext",
+		"declaration": true,
+		"strict": true
+	},
+}

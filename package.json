@@ -1,0 +1,35 @@
+{
+  "name": "my-package",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "sideEffects": false,
+  "types": "./build/index.d.ts",
+  "main": "./build/my-package-node.cjs",
+  "exports": "./build/my-package-node.modern.js",
+  "scripts": {
+    "build": "npm run asbuild && npm run build:node",
+    "build:node": "microbundle build --target node --format modern --raw --no-compress --output build/my-package-node.js --external node:fs/promises",
+    "test": "ava test/*.test.ts",
+    "asbuild:debug": "asc assembly/index.ts --target debug",
+    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "assemblyscript": "^0.27.5",
+    "ava": "^5.2.0",
+    "microbundle": "^0.15.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "ava": {
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--loader=ts-node/esm"
+    ]
+  }
+}
